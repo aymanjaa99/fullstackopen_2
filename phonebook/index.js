@@ -29,4 +29,7 @@ app.get("/api/persons", (req, res) => {
   res.json(persons);
 });
 
+app.get("/info", (req, res) => {
+  res.send(`Phonebook has info about ${persons.length} <p> ${new Date()}</p>`);
+});
 app.listen(PORT, () => console.log(`server running on ${PORT}`));
