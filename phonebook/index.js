@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+var morgan = require("morgan");
 
+app.use(morgan("tiny"));
 app.use(bodyParser.json());
+
 const PORT = 3000;
 let persons = [
   {
