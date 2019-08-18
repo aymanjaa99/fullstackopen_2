@@ -27,6 +27,11 @@ let persons = [
   }
 ];
 
+const isNamePresent = name => {
+  return persons.some(p => {
+    return p.name === name;
+  });
+};
 app.get("/api/persons", (req, res) => {
   res.json(persons);
 });
@@ -54,9 +59,26 @@ app.delete("/api/persons/:id", (req, res) => {
 app.post("/api/persons", (req, res) => {
   const min = 10;
   const max = 1000;
+
+  const body = req.body;
+  if (!body.name || !body.number) {
+    return res.status(400).join({
+      error: "name missing"
+    });
+  }
+
+  if (isNamePresent(body.name)) {
+    return res.status(400).join({
+      error: "name already exists"
+    });
+  }
+
   const id = Math.floor(Math.random() * (max - min)) + min;
-  const person = req.body;
-  person.id = id;
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: id
+  };
 
   persons = persons.concat(person);
   console.log(person);
