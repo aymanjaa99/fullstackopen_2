@@ -32,4 +32,10 @@ app.get("/api/persons", (req, res) => {
 app.get("/info", (req, res) => {
   res.send(`Phonebook has info about ${persons.length} <p> ${new Date()}</p>`);
 });
+
+app.get("/api/persons/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const person = persons.find(p => p.id === id);
+  res.json(person);
+});
 app.listen(PORT, () => console.log(`server running on ${PORT}`));
