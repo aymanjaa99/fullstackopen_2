@@ -3,9 +3,13 @@ const app = express();
 const bodyParser = require("body-parser");
 var morgan = require("morgan");
 
-app.use(morgan("tiny"));
 app.use(bodyParser.json());
-
+morgan.token("body", req => {
+  return JSON.stringify(req.body);
+});
+app.use(
+  morgan(":method :url :status :response-time ms - :res[content-length] :body")
+);
 const PORT = 3000;
 let persons = [
   {
@@ -84,7 +88,7 @@ app.post("/api/persons", (req, res) => {
   };
 
   persons = persons.concat(person);
-  console.log(person);
+
   res.json(person);
 });
 
