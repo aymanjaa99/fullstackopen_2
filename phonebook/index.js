@@ -62,13 +62,13 @@ app.post("/api/persons", (req, res) => {
 
   const body = req.body;
   if (!body.name || !body.number) {
-    return res.status(400).join({
+    return res.status(400).json({
       error: "name missing"
     });
   }
 
   if (isNamePresent(body.name)) {
-    return res.status(400).join({
+    return res.status(400).json({
       error: "name already exists"
     });
   }
